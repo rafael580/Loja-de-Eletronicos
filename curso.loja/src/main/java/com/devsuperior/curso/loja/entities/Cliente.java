@@ -1,6 +1,7 @@
 package com.devsuperior.curso.loja.entities;
 
 import com.devsuperior.curso.loja.entities.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -27,6 +28,8 @@ public class Cliente implements Serializable {
     @ElementCollection
     @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
+
+    @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private  List<Pedido> pedidos = new ArrayList<>();
 

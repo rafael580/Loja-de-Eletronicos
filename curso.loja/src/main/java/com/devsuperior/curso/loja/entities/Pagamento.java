@@ -1,6 +1,7 @@
 package com.devsuperior.curso.loja.entities;
 
 import com.devsuperior.curso.loja.entities.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Long id;
     private Integer estado;
-
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId

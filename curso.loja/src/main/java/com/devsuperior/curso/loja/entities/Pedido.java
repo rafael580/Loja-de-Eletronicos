@@ -1,9 +1,14 @@
 package com.devsuperior.curso.loja.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 public class Pedido implements Serializable {
     private static final Long serialVersionUID = 1L;
@@ -12,8 +17,11 @@ public class Pedido implements Serializable {
     private Long id;
     private Date instante;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "pedido")
     private Pagamento pagamento;
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -21,6 +29,9 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "enderecodeentregra_id")
     private Endereco enderecoDeEntrega;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Pedido() {
     }
@@ -62,6 +73,14 @@ public class Pedido implements Serializable {
 
     public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
         this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     @Override
